@@ -2,8 +2,9 @@
 
 A simplified C++ limit order book built for learning modern C++ and trading system fundamentals.
 
-## Goals
+## Roadmap
 
-- Order Matching
-- Price Levels
-- Modern C++
+- Order
+- PriceLevel
+- OrderBook
+- Matching Engine
