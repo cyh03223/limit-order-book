@@ -19,6 +19,9 @@ public:
         long long timestamp
     );
 
+    // const method to get the price level's price
+    int getId() const; 
+
 private:
 
     int id;

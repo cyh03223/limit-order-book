@@ -1,18 +1,28 @@
+#include "PriceLevel.h"
 #include <iostream>
 
-#include "Order.h"
 
-int main(){
+int main()
+{
 
     Order order(
         1,
         100.5,
         200,
         Side::Buy,
-        123456789
-    ); // declare an order object
+        123456
+    );
 
-     std::cout << "Order created successfully!" << std::endl;
+
+    PriceLevel level(100.5);
+
+
+    level.addOrder(order);
+
+
+    std::cout << "PriceLevel works!"
+              << std::endl;
+
 
     return 0;
-};
+}

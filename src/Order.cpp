@@ -15,3 +15,8 @@ Order::Order(
     this->side = side;
     this->timestamp = timestamp;
 }
+
+int Order::getId() const
+{
+    return id;
+}
