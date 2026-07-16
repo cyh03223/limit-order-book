@@ -1,10 +1,76 @@
 # Limit Order Book
 
-A simplified C++ limit order book built for learning modern C++ and trading system fundamentals.
+A simplified C++ limit order book implementation for learning trading system fundamentals, 
+market microstructure, and high-performance system design.
 
-## Roadmap
+The goal of this project is to build a small but realistic trading engine from scratch, 
+focusing on clean C++ design, data structures, and performance considerations.
 
-- Order
-- PriceLevel
-- OrderBook
-- Matching Engine
+---
+
+## Project Overview
+
+A limit order book (LOB) is a core component of electronic trading systems.
+
+This project simulates the basic workflow of an exchange:
+
+- Receiving orders
+- Maintaining buy and sell order queues
+- Matching compatible orders
+- Managing order lifecycle
+
+The implementation is built in modern C++ with emphasis on:
+
+- Object-oriented design
+- Efficient data structures
+- Low-latency programming concepts
+- Clean and maintainable code
+
+---
+
+# Current Progress
+
+## Core Components
+
+- ✅ Project initialized
+- ✅ Order class
+- ⏳ PriceLevel
+- ⏳ OrderBook
+- ⏳ Matching Engine
+
+## Engineering
+
+- ⏳ Unit testing
+- ⏳ Performance benchmarking
+- ⏳ Documentation
+
+---
+
+# Roadmap
+
+## Phase 1 — Core Data Structures
+
+Goal:
+Build the fundamental components required for a limit order book.
+
+### Order
+
+Status: ✅ Completed
+
+Responsibilities:
+
+- Store order information
+- Represent buy/sell direction
+- Maintain order metadata
+
+---
+
+### PriceLevel
+
+Status: ⏳ Pending
+
+Goal:
+
+Represent all orders at the same price level.
+
+Example:
