@@ -67,10 +67,33 @@ Responsibilities:
 
 ### PriceLevel
 
-Status: ⏳ Pending
+### PriceLevel
+
+Status: ✅ Completed
 
 Goal:
 
 Represent all orders at the same price level.
 
-Example:
+Structure: 
+
+PriceLevel
+
+Price: 100.50
+
+Order 1 → Order 2 → Order 3
+
+Responsibilities:
+
+- Store orders with the same price
+- Maintain FIFO ordering
+- Add new orders
+- Remove orders by order ID
+
+
+Implemented:
+
+- PriceLevel class
+- Header/source separation
+- std::list<Order> order container
+- Order insertion and removal logic
