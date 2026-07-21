@@ -20,7 +20,11 @@ public:
     );
 
     // const method to get the price level's price
-    int getId() const; 
+    int getId() const;
+    double getPrice() const;
+    int getQuantity() const;
+    Side getSide() const;
+    long long getTimestamp() const; 
 
 private:
 

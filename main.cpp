@@ -1,28 +1,25 @@
-#include "PriceLevel.h"
 #include <iostream>
 
+#include "OrderBook.h"
 
 int main()
 {
+    OrderBook orderBook;
 
     Order order(
         1,
-        100.5,
+        100.50,
         200,
         Side::Buy,
-        123456
+        123456789
     );
 
+    orderBook.addOrder(order);
+    orderBook.cancelOrder(1);
+    orderBook.matchOrders();
 
-    PriceLevel level(100.5);
-
-
-    level.addOrder(order);
-
-
-    std::cout << "PriceLevel works!"
+    std::cout << "OrderBook skeleton compiled successfully."
               << std::endl;
-
 
     return 0;
 }

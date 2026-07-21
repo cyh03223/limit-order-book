@@ -34,8 +34,8 @@ The implementation is built in modern C++ with emphasis on:
 
 - ✅ Project initialized
 - ✅ Order class
-- ⏳ PriceLevel
-- ⏳ OrderBook
+- ✅ PriceLevel
+- 🚧 OrderBook skeleton
 - ⏳ Matching Engine
 
 ## Engineering
