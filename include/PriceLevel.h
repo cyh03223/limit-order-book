@@ -2,6 +2,7 @@
 #define PRICE_LEVEL_H
 
 #include <list>
+#include <cstddef>
 #include "Order.h"
 
 
@@ -18,7 +19,12 @@ public:
 
 
     // Remove order by id
-    void removeOrder(int orderId);
+    bool removeOrder(int orderId);
+
+    bool empty() const;
+    std::size_t size() const;
+    // Requires a nonempty price level.
+    const Order& front() const;
 
 private:
 

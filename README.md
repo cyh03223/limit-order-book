@@ -35,12 +35,12 @@ The implementation is built in modern C++ with emphasis on:
 - ✅ Project initialized
 - ✅ Order class
 - ✅ PriceLevel
-- 🚧 OrderBook skeleton
+- ✅ OrderBook insertion and cancellation (including empty-level cleanup)
 - ⏳ Matching Engine
 
 ## Engineering
 
-- ⏳ Unit testing
+- ✅ Basic assertion tests for insertion, FIFO, and cancellation
 - ⏳ Performance benchmarking
 - ⏳ Documentation
 
@@ -64,8 +64,6 @@ Responsibilities:
 - Maintain order metadata
 
 ---
-
-### PriceLevel
 
 ### PriceLevel
 
@@ -97,3 +95,39 @@ Implemented:
 - Header/source separation
 - std::list<Order> order container
 - Order insertion and removal logic
+
+
+### OrderBook
+
+Buy price levels use a descending `std::map`; sell price levels use an
+ascending `std::map`. Each level stores orders in FIFO insertion order.
+`addOrder()` uses C++17 `try_emplace(price, price)` to find or create a level:
+the first argument is the map key and the second constructs `PriceLevel`.
+Cancellation searches bids and asks and erases a level when its last order is removed.
+
+Read-only inspection uses `findPriceLevel()` (null when absent),
+`priceLevelCount()`, and `PriceLevel::empty()`, `size()`, and `front()`.
+Only call `front()` on a nonempty level. A returned level pointer becomes invalid
+when that level is erased or the book is destroyed.
+
+Order IDs are expected to be unique; duplicate-ID validation is not implemented.
+`addOrder()` only stores orders, and `matchOrders()` remains a placeholder.
+Next: implement FIFO matching with full and partial fills, then trade records.
+Benchmarking and optimization follow correctness tests.
+
+## Build and test
+
+From the repository root, using a C++17 compiler:
+
+```bash
+mkdir -p build
+g++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/Order.cpp src/PriceLevel.cpp src/OrderBook.cpp main.cpp -o build/order_book
+./build/order_book
+
+g++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/Order.cpp src/PriceLevel.cpp src/OrderBook.cpp tests/OrderBookTests.cpp -o build/order_book_tests
+./build/order_book_tests
+```
+
+Tests cover order getters, removal success/failure, both sides of insertion,
+price-level reuse, FIFO, multiple prices, cancellation on both sides, missing IDs,
+and final-order cleanup. Build tests without `-DNDEBUG` so assertions execute.

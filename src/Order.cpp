@@ -20,3 +20,23 @@ int Order::getId() const
 {
     return id;
 }
+
+double Order::getPrice() const
+{
+    return price;
+}
+
+int Order::getQuantity() const
+{
+    return quantity;
+}
+
+Side Order::getSide() const
+{
+    return side;
+}
+
+long long Order::getTimestamp() const
+{
+    return timestamp;
+}

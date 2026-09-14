@@ -2,6 +2,8 @@
 #define ORDER_BOOK_H
 
 #include <map>
+#include <cstddef>
+#include <functional>
 
 #include "Order.h"
 #include "PriceLevel.h"
@@ -16,6 +18,11 @@ public:
 
     // Match compatible buy and sell orders
     void matchOrders();
+
+    // Returns nullptr if the price level does not exist.
+    // The pointer remains valid until that level is erased or the book is destroyed.
+    const PriceLevel* findPriceLevel(Side side, double price) const;
+    std::size_t priceLevelCount(Side side) const;
 
 private:
     // Buy orders: highest price has priority

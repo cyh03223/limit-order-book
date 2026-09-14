@@ -11,8 +11,23 @@ void PriceLevel::addOrder(const Order& order)
     orders.push_back(order);
 }
 
+bool PriceLevel::empty() const
+{
+    return orders.empty();
+}
 
-void PriceLevel::removeOrder(int orderId)
+std::size_t PriceLevel::size() const
+{
+    return orders.size();
+}
+
+const Order& PriceLevel::front() const
+{
+    return orders.front();
+}
+
+
+bool PriceLevel::removeOrder(int orderId)
 {
 
     for(auto it = orders.begin(); it != orders.end(); ++it)
@@ -21,9 +36,11 @@ void PriceLevel::removeOrder(int orderId)
         if(it->getId() == orderId)
         {
             orders.erase(it);
-            return;
+            return true;
         }
 
     }
+
+    return false;
 
 }
