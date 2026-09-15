@@ -24,7 +24,11 @@ public:
     bool empty() const;
     std::size_t size() const;
     // Requires a nonempty price level.
+    Order& front();
     const Order& front() const;
+
+    // Requires a nonempty price level; invalidates references to the removed order.
+    void popFront();
 
 private:
 

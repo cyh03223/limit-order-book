@@ -26,6 +26,10 @@ public:
     Side getSide() const;
     long long getTimestamp() const; 
 
+    // Throws std::invalid_argument if amount is negative or exceeds quantity.
+    // Reducing by zero leaves the order unchanged.
+    void reduceQuantity(int amount);
+
 private:
 
     int id;

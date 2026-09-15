@@ -1,7 +1,69 @@
 #include <cassert>
 #include <iostream>
+#include <stdexcept>
+#include <type_traits>
+#include <utility>
 
 #include "OrderBook.h"
+
+static_assert(std::is_same_v<decltype(std::declval<PriceLevel&>().front()), Order&>);
+static_assert(std::is_same_v<decltype(std::declval<const PriceLevel&>().front()), const Order&>);
+
+void testQuantityReduction()
+{
+    Order order(7, 100.5, 20, Side::Sell, 123);
+    order.reduceQuantity(0);
+    assert(order.getQuantity() == 20);
+    order.reduceQuantity(6);
+    assert(order.getQuantity() == 14);
+
+    for (int amount : {-1, 15})
+    {
+        bool rejected = false;
+        try
+        {
+            order.reduceQuantity(amount);
+        }
+        catch (const std::invalid_argument&)
+        {
+            rejected = true;
+        }
+        assert(rejected);
+        assert(order.getQuantity() == 14);
+    }
+
+    order.reduceQuantity(14);
+    assert(order.getQuantity() == 0);
+    order.reduceQuantity(0);
+    assert(order.getQuantity() == 0);
+    assert(order.getId() == 7);
+    assert(order.getPrice() == 100.5);
+    assert(order.getSide() == Side::Sell);
+    assert(order.getTimestamp() == 123);
+}
+
+void testMatchingQueueAccess()
+{
+    PriceLevel level(100.0);
+    level.addOrder(Order(1, 100.0, 10, Side::Buy, 1));
+    level.addOrder(Order(2, 100.0, 20, Side::Buy, 2));
+    const PriceLevel& view = level;
+
+    level.front().reduceQuantity(4);
+    assert(view.front().getQuantity() == 6);
+    assert(view.front().getId() == 1);
+    assert(level.size() == 2);
+    level.front().reduceQuantity(6);
+    assert(view.front().getQuantity() == 0);
+    level.popFront();
+    assert(level.size() == 1);
+    assert(view.front().getId() == 2);
+    assert(view.front().getQuantity() == 20);
+    level.front().reduceQuantity(20);
+    level.popFront();
+    assert(level.empty());
+    assert(level.size() == 0);
+}
 
 void testOrder()
 {
@@ -85,6 +147,8 @@ void testBookSide(Side side, Side oppositeSide)
 int main()
 {
     testOrder();
+    testQuantityReduction();
+    testMatchingQueueAccess();
     testPriceLevel();
     testBookSide(Side::Buy, Side::Sell);
     testBookSide(Side::Sell, Side::Buy);

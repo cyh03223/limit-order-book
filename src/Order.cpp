@@ -1,4 +1,5 @@
 #include "Order.h"
+#include <stdexcept>
 
 
 Order::Order(
@@ -39,4 +40,14 @@ Side Order::getSide() const
 long long Order::getTimestamp() const
 {
     return timestamp;
+}
+
+void Order::reduceQuantity(int amount)
+{
+    if (amount < 0 || amount > quantity)
+    {
+        throw std::invalid_argument("Reduction must be between zero and remaining quantity");
+    }
+
+    quantity -= amount;
 }

@@ -26,6 +26,16 @@ const Order& PriceLevel::front() const
     return orders.front();
 }
 
+Order& PriceLevel::front()
+{
+    return orders.front();
+}
+
+void PriceLevel::popFront()
+{
+    orders.pop_front();
+}
+
 
 bool PriceLevel::removeOrder(int orderId)
 {

@@ -115,6 +115,14 @@ Order IDs are expected to be unique; duplicate-ID validation is not implemented.
 Next: implement FIFO matching with full and partial fills, then trade records.
 Benchmarking and optimization follow correctness tests.
 
+Matching preparation is complete: `Order::reduceQuantity(amount)` updates the
+remaining quantity and throws `std::invalid_argument` for negative amounts or
+amounts above the remaining quantity. Zero is a no-op. Mutable `PriceLevel::front()`
+allows updating the oldest order, while the const overload remains available for
+inspection. `popFront()` removes that order and invalidates references to it.
+Both front access and removal require a nonempty level. Tests cover quantity
+reduction, rejected reductions, both front overloads, and FIFO removal.
+
 ## Build and test
 
 From the repository root, using a C++17 compiler:
